@@ -32,6 +32,8 @@ class Dspdfviewer < Formula
 
     mkdir "build" do
       system "cmake", "..", *args
+      system "make"
+      system "ctest", "--output-on-failure", "--timeout", "60"
       system "make", "install"
     end
   end
