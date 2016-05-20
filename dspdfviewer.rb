@@ -12,13 +12,13 @@ class Dspdfviewer < Formula
   depends_on "poppler" => "with-qt5"
 
   def install
-	extra_args = %W[
-	  -DUseQtFive=ON
-	  -DUsePrerenderedPDF=ON
-	  -DRunDualScreenTests=OFF
-	]
+    extra_args = %W[
+      -DUseQtFive=ON
+      -DUsePrerenderedPDF=ON
+      -DRunDualScreenTests=OFF
+    ]
 
-	mkdir "build" do
+  mkdir "build" do
       system "cmake", "..", *(std_cmake_args + extra_args)
       system "make", "install"
     end
