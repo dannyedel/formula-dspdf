@@ -10,7 +10,7 @@ class Dspdfviewer < Formula
   depends_on "pkg-config" => :build
   depends_on "boost"
 
-  option "with-qt5"
+  option "without-qt5", "Build against Qt4 instead of Qt5 (default)"
 
   if build.with? "qt5"
     depends_on "poppler" => "with-qt5"

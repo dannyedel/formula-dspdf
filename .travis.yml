@@ -1,5 +1,13 @@
 language: cpp
 os: osx
 before_install: brew update >/dev/null
-install: brew install dspdfviewer.rb
+env:
+    global:
+        - HOMEBREW_VERBOSE=1
+    matrix:
+        - PARAMS=--with-qt5
+        - PARAMS=--without-qt5
+install:
+    - brew options dspdfviewer.rb
+    - brew install dspdfviewer.rb $PARAMS
 script: dspdfviewer --version
