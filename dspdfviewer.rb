@@ -9,17 +9,29 @@ class Dspdfviewer < Formula
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
   depends_on "boost"
-  depends_on "poppler" => "with-qt5"
+
+  option "with-qt5"
+
+  if build.with? "qt5"
+    depends_on "poppler" => "with-qt5"
+  end
+
+  if build.without? "qt5"
+    depends_on "poppler" => "with-qt"
+  end
 
   def install
-    extra_args = %W[
-      -DUseQtFive=ON
-      -DUsePrerenderedPDF=ON
-      -DRunDualScreenTests=OFF
-    ]
+    args = std_cmake_args
+    args << "-DUsePrerenderedPDF=ON"
+    args << "-DRunDualScreenTests=OFF"
+    if build.with? "qt5"
+      args << "-DUseQtFive=ON"
+    else
+      args << "-DUseQtFive=OFF"
+    end
 
-  mkdir "build" do
-      system "cmake", "..", *(std_cmake_args + extra_args)
+    mkdir "build" do
+      system "cmake", "..", *args
       system "make", "install"
     end
   end
